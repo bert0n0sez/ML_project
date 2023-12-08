@@ -1,7 +1,6 @@
 import pandas as pd
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import GradientBoostingClassifier
 from sklearn import tree
 from sklearn import svm
 from sklearn.decomposition import PCA
@@ -42,22 +41,12 @@ class Machine_Learning(Primary_Data_Processing):
         prediction = clf.predict(X_test)
         return prediction
     
-    def gradient_boosting(self, X_train, X_test, y_train):
-        clf = GradientBoostingClassifier(n_estimators=10, learning_rate=1.0, max_depth=1, random_state=0).fit(X_train, y_train)
-        prediction = clf.predict(X_test)
-        return prediction
-
     def svm(self, X_train, X_test, y_train):
         clf = svm.SVC(decision_function_shape='ovo')
         clf.fit(X_train, y_train)
         prediction = clf.predict(X_test)
         return prediction
 
-    def lin_svm(self, X_train, X_test, y_train):
-        clf = svm.LinearSVC(max_iter=10000, dual=False).fit(X_train, y_train)
-        clf.fit(X_train, y_train)
-        prediction = clf.predict(X_test)
-        return prediction
         
     def decision_tree(self, X_train, X_test, y_train):
         clf = tree.DecisionTreeClassifier()
@@ -85,18 +74,6 @@ class Scores(Primary_Data_Processing):
         scores = f1_score(y_test, prediction, average='weighted')
         return scores
 
-
-def main():
-    primary = Primary_Data_Processing()
-    machine = Machine_Learning()
-    score = Scores()
-    X_train, X_test, y_train, y_test = primary.None_Processing()
-    prediction = machine.lin_svm(X_train, X_test, y_train)
-    final_score = score.accuracy_score(prediction, y_test)
-    print('Наконец-то у меня спустя 5 часов дебага получился ответ:', final_score)
-
-if __name__ == '__main__':
-    main()
 
     
 
